@@ -4,24 +4,26 @@
 Proyek ini merupakan sistem absensi berbasis IoT yang menggunakan sensor sidik jari AS608, RTC, dan ESP8266 untuk mencatat kehadiran siswa. Data absensi dikirim ke database MongoDB melalui Ubidots, serta dianalisis menggunakan model AI berbasis CNN. Sistem ini dapat mendeteksi apakah siswa terlambat atau hadir tepat waktu berdasarkan waktu yang tercatat.
 
 ## Teknologi yang Digunakan
-- **Hardware:**
-  - Sensor Sidik Jari AS608
-  - RTC (Real-Time Clock)
-  - ESP8266
-  - Tombol (Button)
-- **Software & Tools:**
-  - Ubidots (IoT Platform)
-  - MongoDB (Database)
-  - Thonny (Python IDE)
-  - CNN (Convolutional Neural Network) untuk analisis AI
+### Hardware
+- **Sensor Sidik Jari AS608** – untuk identifikasi biometrik.
+- **RTC (Real-Time Clock)** – untuk mencatat waktu absensi.
+- **ESP8266** – sebagai mikrokontroler dan penghubung ke internet.
+- **Tombol (Button)** – untuk input manual jika diperlukan.
 
-## Fitur
-- **Pengenalan Sidik Jari** dengan sensor AS608
-- **Pencatatan Waktu** menggunakan RTC
-- **Koneksi Internet** melalui ESP8266
-- **Penyimpanan Data** ke MongoDB melalui Ubidots
-- **Analisis AI** untuk memprediksi keterlambatan
-- **Status Kehadiran** (Hadir/Terlambat) berdasarkan waktu absen
+### Software & Tools
+- **Ubidots** – platform IoT untuk pengiriman data.
+- **MongoDB** – database untuk menyimpan data absensi.
+- **Thonny** – IDE Python untuk pemrograman ESP8266.
+- **CNN (Convolutional Neural Network)** – untuk analisis AI dalam menentukan status keterlambatan.
+
+## Fitur Utama
+✅ **Pengenalan Sidik Jari** dengan sensor AS608
+✅ **Pencatatan Waktu Otomatis** menggunakan RTC
+✅ **Koneksi ke Internet** melalui ESP8266
+✅ **Penyimpanan Data Cloud** dengan MongoDB melalui Ubidots
+✅ **Analisis AI** untuk memprediksi keterlambatan
+✅ **Status Kehadiran** (Hadir/Terlambat) secara otomatis
+✅ **Dashboard Visualisasi** untuk memantau data absensi
 
 ## Struktur Data
 Data yang dikirim ke database memiliki format berikut:
@@ -36,33 +38,38 @@ Data yang dikirim ke database memiliki format berikut:
 ```
 
 ## Cara Menggunakan
-1. **Pendaftaran Sidik Jari**
-   - Tempelkan jari pada sensor AS608 untuk mendaftarkan sidik jari pertama kali.
-   - Data sidik jari akan disimpan di ESP8266.
-2. **Proses Absensi**
-   - Tempelkan jari pada sensor untuk verifikasi.
-   - Jika cocok, sistem akan mencatat waktu dan mengirim data ke MongoDB melalui Ubidots.
-3. **Analisis Kehadiran**
-   - Model AI berbasis CNN akan memproses data untuk menentukan status keterlambatan.
-   
-## Instalasi
-1. **Persiapkan Perangkat Keras**
-   - Hubungkan sensor AS608, RTC, dan tombol ke ESP8266 sesuai skema yang telah dibuat.
-2. **Konfigurasi Perangkat Lunak**
-   - Pastikan memiliki akun Ubidots dan MongoDB.
-   - Install pustaka yang diperlukan di Thonny:
+### 1. Pendaftaran Sidik Jari
+- Tempelkan jari pada sensor AS608 untuk mendaftarkan sidik jari pertama kali.
+- Data sidik jari akan disimpan di ESP8266.
+
+### 2. Proses Absensi
+- Tempelkan jari pada sensor untuk verifikasi.
+- Jika cocok, sistem akan mencatat waktu dan mengirim data ke MongoDB melalui Ubidots.
+
+### 3. Analisis Kehadiran
+- Model AI berbasis CNN akan memproses data untuk menentukan status keterlambatan.
+- Data dapat diakses melalui dashboard untuk monitoring real-time.
+
+## Instalasi & Konfigurasi
+1. **Siapkan Perangkat Keras**
+   - Hubungkan sensor AS608, RTC, dan tombol ke ESP8266 sesuai skema rangkaian.
+2. **Konfigurasi Software**
+   - Buat akun di **Ubidots** dan **MongoDB**.
+   - Install pustaka Python yang dibutuhkan:
      ```bash
      pip install pymongo requests
      ```
 3. **Jalankan Program**
-   - Unggah kode ke ESP8266 dan jalankan skrip Python di Thonny.
+   - Unggah kode ke ESP8266.
+   - Jalankan skrip Python di Thonny untuk menghubungkan perangkat.
 
 ## Pengembangan Selanjutnya
-- Integrasi dengan aplikasi mobile untuk akses data absensi secara real-time.
-- Peningkatan akurasi AI untuk prediksi keterlambatan.
+🚀 **Integrasi dengan aplikasi mobile** untuk akses data secara real-time.
+📊 **Peningkatan AI** agar lebih akurat dalam menganalisis keterlambatan.
+🔗 **Notifikasi otomatis** ke siswa/guru jika ada keterlambatan.
 
 ## Kontributor
-- **Nama Anda** - Pengembang Utama
-
-## Lisensi
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+- **[Dwi Nur Cahya](https://github.com/dwincahya)**
+- **[Juandito Yefta Priatama](https://github.com/juanditoyeftapriatama)**
+- **[Emilliano Sebastian Freitas](https://github.com/SoramiKS)**
+- **[Oreo Majhesta](https://github.com/OreoMajhesta)**
