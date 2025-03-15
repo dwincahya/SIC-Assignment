@@ -1,10 +1,19 @@
 #include <Adafruit_Fingerprint.h>
+#include <Wire.h>
+#include <RTClib.h>
 #include <HardwareSerial.h>
 
+// ====== Konfigurasi Pin ======
+#define TX_FP 16  // TX Sensor Sidik Jari ke GPIO16 ESP32
+#define RX_FP 17  // RX Sensor Sidik Jari ke GPIO17 ESP32
+#define BUTTON_MODE 4  // Tombol untuk mengganti mode
+#define SDA_PIN 21  // Pin SDA RTC DS3231
+#define SCL_PIN 22  // Pin SCL RTC DS3231
+
+// ====== Inisialisasi Perangkat ======
 HardwareSerial mySerial(2);  // UART2 (TX = GPIO17, RX = GPIO16)
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
-
-#define BUTTON_MODE 4  // Tombol untuk ganti mode
+RTC_DS3231 rtc;  // Inisialisasi RTC
 
 bool mode = false;   // false = Pendaftaran, true = Verifikasi
 unsigned long lastPress = 0; // Debounce tombol
@@ -21,7 +30,7 @@ const char* names[] = {
 
 void setup() {
     Serial.begin(115200);
-    mySerial.begin(57600, SERIAL_8N1, 16, 17);  // UART2 untuk sensor AS608
+    mySerial.begin(57600, SERIAL_8N1, RX_FP, TX_FP);  // UART2 untuk sensor AS608
     pinMode(BUTTON_MODE, INPUT_PULLUP);  // Tombol pakai pull-up internal
 
     finger.begin(57600);  // Inisialisasi sensor
@@ -31,6 +40,17 @@ void setup() {
     } else {
         Serial.println("❌ Sensor tidak ditemukan! Periksa koneksi.");
         while (1);
+    }
+
+    Wire.begin(SDA_PIN, SCL_PIN);  // Inisialisasi I2C dengan pin yang dideklarasikan
+    if (!rtc.begin()) {
+        Serial.println("❌ RTC tidak terdeteksi! Periksa koneksi.");
+        while (1);
+    }
+
+    if (rtc.lostPower()) {
+        Serial.println("⚠️ RTC kehilangan daya, mengatur waktu ke default...");
+        rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));  // Atur waktu dari waktu kompilasi
     }
 }
 
@@ -102,6 +122,22 @@ void verifyFingerprint() {
         } else {
             Serial.println(" (UNKNOWN)");
         }
+
+        // Catat waktu verifikasi
+        DateTime now = rtc.now();
+        Serial.print("🕒 Waktu verifikasi: ");
+        Serial.print(now.year(), DEC);
+        Serial.print('/');
+        Serial.print(now.month(), DEC);
+        Serial.print('/');
+        Serial.print(now.day(), DEC);
+        Serial.print(" ");
+        Serial.print(now.hour(), DEC);
+        Serial.print(':');
+        Serial.print(now.minute(), DEC);
+        Serial.print(':');
+        Serial.println(now.second(), DEC);
+
     } else {
         Serial.println("❌ Sidik jari tidak cocok!");
     }
