@@ -138,6 +138,18 @@ void verifyFingerprint() {
         Serial.print(':');
         Serial.println(now.second(), DEC);
 
+        // === Verifikasi Status Kehadiran ===
+        int jam = now.hour();
+        int menit = now.minute();
+
+        if (jam < 6 || (jam == 6 && menit < 45)) {
+            Serial.println("✅ Status: HADIR");
+        } else if (jam < 13) {
+            Serial.println("⚠️ Status: TERLAMBAT");
+        } else {
+            Serial.println("❌ Status: TIDAK MASUK");
+        }
+
     } else {
         Serial.println("❌ Sidik jari tidak cocok!");
     }
