@@ -1,34 +1,36 @@
-# Mesin Absensi dengan Sensor AS608 dan ESP8266
+# Mesin Absensi dengan Sensor AS608 dan ESP32
 
 ## Deskripsi Proyek
-Proyek ini merupakan sistem absensi berbasis IoT yang menggunakan sensor sidik jari AS608, RTC, dan ESP8266 untuk mencatat kehadiran siswa. Data absensi dikirim ke platform **Ubidots** untuk monitoring dan ke database. Sistem ini juga terintegrasi dengan **chatbot berbasis AI** untuk menjawab pertanyaan seputar status kehadiran siswa secara interaktif, dan **dashboard visualisasi di Streamlit** untuk analisis data secara real-time.
+Proyek ini merupakan sistem absensi berbasis IoT yang menggunakan sensor sidik jari AS608, RTC, dan **ESP32** untuk mencatat kehadiran siswa. Data absensi dikirim ke platform **Ubidots** untuk monitoring dan juga disimpan ke **MongoDB**. Sistem ini terintegrasi dengan **asisten AI berbasis Gemini** dari Google, yang tertanam dalam **dashboard Streamlit**, memungkinkan interaksi langsung dengan guru untuk menanyakan status kehadiran siswa secara real-time.
 
 ## Teknologi yang Digunakan
 ### Hardware
 - **Sensor Sidik Jari AS608** – untuk identifikasi biometrik.
 - **RTC (Real-Time Clock)** – untuk mencatat waktu absensi.
-- **ESP8266** – sebagai mikrokontroler dan penghubung ke internet.
-- **Tombol (Button)** – untuk input manual jika diperlukan.
+- **ESP32** – sebagai mikrokontroler dengan konektivitas Wi-Fi.
+- **2 Tombol (Push Button)**:
+  - Tombol 1: untuk masuk ke mode pendaftaran sidik jari.
+  - Tombol 2: untuk proses absensi (verifikasi sidik jari siswa).
 
 ### Software & Tools
 - **Ubidots** – platform IoT untuk pengiriman dan visualisasi data.
 - **Streamlit** – untuk membuat dashboard visualisasi absensi secara real-time.
-- **MongoDB / Firebase / File Cloud** – sebagai penyimpanan data absensi.
-- **Chatbot AI (misalnya ChatGPT / Rasa / Dialogflow)** – untuk menjawab pertanyaan seperti “Siapa saja yang terlambat hari ini?” atau “Berapa persen kehadiran minggu ini?”
-- **Thonny** – IDE Python untuk pemrograman ESP8266.
+- **MongoDB** – sebagai basis data utama untuk menyimpan catatan absensi.
+- **Gemini AI (via API Google AI)** – chatbot yang terintegrasi di dalam Streamlit.
+- **Thonny / Arduino IDE** – untuk pemrograman ESP32.
 
 ## Fitur Utama
 ✅ **Pengenalan Sidik Jari** dengan sensor AS608  
 ✅ **Pencatatan Waktu Otomatis** menggunakan RTC  
-✅ **Koneksi Internet** melalui ESP8266  
-✅ **Pengiriman & Visualisasi Data** ke Ubidots  
-✅ **Chatbot Interaktif** untuk tanya jawab kehadiran  
-✅ **Dashboard di Streamlit** untuk analisis visual kehadiran  
-✅ **Status Kehadiran Otomatis** berdasarkan waktu  
-✅ **Notifikasi Keterlambatan** berbasis AI
+✅ **ESP32 sebagai Otak Sistem** dengan konektivitas ke Wi-Fi  
+✅ **Pengiriman Data ke Ubidots** untuk monitoring  
+✅ **Penyimpanan Data di MongoDB** untuk histori lengkap  
+✅ **Dashboard Streamlit** yang intuitif dan interaktif  
+✅ **Gemini AI Chatbot** untuk tanya jawab tentang data kehadiran  
+✅ **Notifikasi dan Insight** berbasis data real-time  
 
 ## Struktur Data
-Contoh data absensi yang dikirim:
+Contoh data absensi:
 ```json
 {
   "id": "123456",
@@ -40,47 +42,53 @@ Contoh data absensi yang dikirim:
 ```
 
 ## Cara Menggunakan
-### 1. Pendaftaran Sidik Jari
-- Tempelkan jari pada sensor AS608 untuk mendaftarkan sidik jari.
-- Data sidik jari disimpan di memori ESP8266.
+### 1. Mode Pendaftaran Sidik Jari
+- Tekan **Tombol 1** untuk masuk ke mode pendaftaran.
+- Tempelkan jari pada sensor AS608.
+- Data sidik jari disimpan di memori ESP32.
 
-### 2. Proses Absensi
+### 2. Mode Absensi
+- Tekan **Tombol 2** untuk mulai mode absensi.
 - Tempelkan jari untuk verifikasi.
-- Jika cocok, data waktu kehadiran dikirim ke **Ubidots**.
+- Jika cocok, data waktu kehadiran dikirim ke **Ubidots** dan **MongoDB**.
 
-### 3. Analisis dan Interaksi
-- **Dashboard Streamlit** menampilkan grafik dan statistik kehadiran siswa.
-- **Chatbot AI** menjawab pertanyaan seperti:
+### 3. Dashboard dan Chatbot
+- Buka dashboard Streamlit.
+- Lihat grafik kehadiran dan statistik per kelas/per siswa.
+- Gunakan **Gemini chatbot** untuk bertanya:
   - “Siapa saja yang tidak hadir hari ini?”
+  - “Berapa persen kehadiran minggu ini?”
   - “Apakah siswa X sering terlambat?”
 
 ## Instalasi & Konfigurasi
-1. **Siapkan Perangkat Keras**
-   - Hubungkan sensor AS608, RTC, dan tombol ke ESP8266.
+1. **Siapkan Hardware**
+   - Hubungkan sensor AS608, RTC, dan dua tombol ke ESP32.
 
-2. **Konfigurasi Platform**
-   - Buat akun di **Ubidots** dan siapkan dashboard.
-   - Siapkan **Streamlit app** dan integrasikan dengan database.
-   - Deploy **chatbot AI** (gunakan webhook jika ingin chatbot merespons data absensi dari server).
+2. **Siapkan Platform**
+   - Daftar dan buat dashboard di **Ubidots**.
+   - Siapkan database **MongoDB (Atlas)**.
+   - Buat aplikasi **Streamlit** dan integrasikan Gemini API.
 
-3. **Instalasi Software**
+3. **Install Software**
    - Install pustaka Python:
      ```bash
-     pip install streamlit pymongo requests
+     pip install streamlit pymongo requests google-generativeai
      ```
 
-4. **Jalankan Program**
-   - Unggah kode ke ESP8266 via Thonny.
-   - Jalankan Streamlit dan chatbot AI.
+4. **Jalankan Sistem**
+   - Upload firmware ke ESP32 (via Thonny/Arduino IDE).
+   - Jalankan aplikasi Streamlit:
+     ```bash
+     streamlit run dashboard.py
+     ```
 
 ## Pengembangan Selanjutnya
-🚀 **Integrasi Mobile App** untuk siswa dan orang tua  
-💬 **Notifikasi WhatsApp / Telegram** dari chatbot  
-📈 **Prediksi Pola Kehadiran** menggunakan Machine Learning  
-📅 **Fitur Kalender Absensi** di dashboard
+💬 **Notifikasi WhatsApp / Telegram**
+📊 **Analisis Prediktif** dengan Machine Learning  
 
 ## Kontributor
 - **[Dwi Nur Cahya](https://github.com/dwincahya)**
 - **[Juandito Yefta Priatama](https://github.com/juanditoyeftapriatama)**
 - **[Emilliano Sebastian Freitas](https://github.com/SoramiKS)**
 - **[Oreo Majhesta](https://github.com/OreoMajhesta)**
+
