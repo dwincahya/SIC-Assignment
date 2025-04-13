@@ -5,10 +5,12 @@ import pandas as pd
 from datetime import datetime, timedelta
 import plotly.express as px
 from datetime import timezone
+import os
+from dotenv import load_dotenv, dotenv_values 
 
 
 # Konfigurasi Gemini API
-configure(api_key="AIzaSyBL6iDNs_en9cUiJD5Q_iXQnFZV0kr-_Us")
+configure(api_key=os.getenv("GEMINI_API"))
 gemini = GenerativeModel("models/gemini-1.5-pro")
 
 # Koneksi MongoDB
