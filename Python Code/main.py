@@ -144,10 +144,10 @@ def cek_absen_sore():
             ID = int(id_str)
             if ID not in absen_hari_ini:
                 waktu_str = format_waktu(waktu)
-                log_absen(info["nama"], waktu_str, "Tidak Masuk")
+                log_absen(info["nama"], waktu_str, "Tidak Hadir")
                 waktu_iso = waktu_str.replace(" ", "T")
-                kirim_ke_api(info["nama"], waktu_iso, "Tidak Masuk", ID, info["kelas"])
-                print(f"{info['nama']} tidak masuk (absen jam 14.00)")
+                kirim_ke_api(info["nama"], waktu_iso, "Tidak Hadir", ID, info["kelas"])
+                print(f"{info['nama']} tidak Hadir (absen jam 14.00)")
 
 # === Fungsi Cek Terlambat Saat Boot ===
 def cek_absen_terlewat_saat_boot():
