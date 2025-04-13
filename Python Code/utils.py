@@ -7,12 +7,15 @@ def load_nama():
     except:
         return {}
 
-def simpan_nama(ID, nama):
+def simpan_nama(ID, nama, kelas):
     data = load_nama()
-    data[str(ID)] = nama
+    data[str(ID)] = {
+        "nama": nama,
+        "kelas": kelas
+    }
     with open("data.json", "w") as f:
         ujson.dump(data, f)
 
 def get_nama(ID):
     data = load_nama()
-    return data.get(str(ID), f"ID {ID}")
+    return data.get(str(ID), {"nama": f"ID {ID}", "kelas": "Unknown"})
