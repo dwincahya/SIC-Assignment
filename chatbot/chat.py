@@ -18,9 +18,6 @@ client = MongoClient("mongodb+srv://juanditoyeftapriatama:jyp120707@cluster0.rmd
 db = client["sekolah"]
 collection = db["kehadiran"]
 
-# UI
-st.title("🤖 Chatbot Absensi Siswa (Gemini)")
-
 menu = st.sidebar.radio("Pilih tampilan", ["Chatbot", "Chart Absensi"])
 
 if "messages" not in st.session_state:
@@ -28,6 +25,9 @@ if "messages" not in st.session_state:
 
 # =================== CHATBOT ===================
 if menu == "Chatbot":
+    # UI
+    st.title("🤖 Chatbot Absensi Siswa (Gemini)")
+    
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
