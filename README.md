@@ -79,7 +79,7 @@ Contoh data absensi:
    - Upload firmware ke ESP32 (via Thonny/Arduino IDE).
    - Jalankan aplikasi Streamlit:
      ```bash
-     streamlit run dashboard.py
+     streamlit run chat.py
      ```
 
 ## Pengembangan Selanjutnya
