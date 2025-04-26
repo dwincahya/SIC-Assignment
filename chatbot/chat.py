@@ -7,6 +7,7 @@ import plotly.express as px
 from datetime import timezone
 import os
 from dotenv import load_dotenv, dotenv_values 
+load_dotenv()
 
 
 # Konfigurasi Gemini API
